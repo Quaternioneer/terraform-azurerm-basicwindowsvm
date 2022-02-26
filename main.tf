@@ -78,11 +78,12 @@ resource azurerm_network_interface_security_group_association NIC-NSG {
   network_security_group_id     = azurerm_network_security_group.NSG.id
 }
 
-resource azurerm_network_interface_backend_address_pool_association NIC-Pool{
-  network_interface_id    = azurerm_network_interface.NIC.id
-  ip_configuration_name   = azurerm_network_interface.NIC.ip_configuration
-  backend_address_pool_id = var.load_balancer_backend_address_pools_ids[ip_configuration.key]
-}
+#There is an error because the key is no longer in the for_each block commenting for now: https://www.terraform.io/language/meta-arguments/for_each
+#resource azurerm_network_interface_backend_address_pool_association NIC-Pool{
+#  network_interface_id    = azurerm_network_interface.NIC.id
+#  ip_configuration_name   = azurerm_network_interface.NIC.ip_configuration
+#  backend_address_pool_id = var.load_balancer_backend_address_pools_ids[ip_configuration.key]
+#}
 ####end of changes
 
 resource azurerm_virtual_machine VM {
