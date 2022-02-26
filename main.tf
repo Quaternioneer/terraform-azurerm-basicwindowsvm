@@ -67,7 +67,6 @@ resource azurerm_network_interface NIC {
       private_ip_address_allocation           = var.nic_ip_configuration.private_ip_address_allocation[ip_configuration.key]
       public_ip_address_id                    = var.public_ip ? azurerm_public_ip.VM-EXT-PubIP[ip_configuration.key].id : ""
       primary                                 = ip_configuration.key == 0 ? true : false
-      load_balancer_backend_address_pools_ids = var.load_balancer_backend_address_pools_ids[ip_configuration.key]
     }
   }
   tags = var.tags
@@ -79,6 +78,12 @@ resource azurerm_network_interface_security_group_association NIC-NSG {
   network_security_group_id     = azurerm_network_security_group.NSG.id
 }
 
+resource azurerm_network_interface_backend_address_pool_association NIC-Pool{
+  network_interface_id    = azurerm_network_interface.NIC.id
+  ip_configuration_name   = "ipconfig${ip_configuration.key + 1}"
+  backend_address_pool_id = var.load_balancer_backend_address_pools_ids[ip_configuration.key]
+}
+####end of changes
 
 resource azurerm_virtual_machine VM {
   name                             = var.name
