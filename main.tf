@@ -57,7 +57,6 @@ resource azurerm_network_interface NIC {
   resource_group_name           = var.resource_group_name
   enable_ip_forwarding          = var.nic_enable_ip_forwarding
   enable_accelerated_networking = var.nic_enable_accelerated_networking
-  network_security_group_id     = azurerm_network_security_group.NSG.id
   dns_servers                   = var.dnsServers
   dynamic "ip_configuration" {
     for_each = var.nic_ip_configuration.private_ip_address_allocation
@@ -73,6 +72,13 @@ resource azurerm_network_interface NIC {
   }
   tags = var.tags
 }
+
+#Added on 2022/02/26 by ND to upgrade Terraform syntax
+resource azurerm_network_interface_security_group_association NIC-NSG {
+  network_interface_id      = azurerm_network_interface.NIC.id
+  network_security_group_id     = azurerm_network_security_group.NSG.id
+}
+
 
 resource azurerm_virtual_machine VM {
   name                             = var.name
