@@ -13,10 +13,8 @@ variable "custom_data" {
 resource "azurerm_virtual_machine_extension" "CustomScriptExtension" {
 
   count                = var.custom_data == null ? 0 : 1
+  virtual_machine_id   = azurerm_virtual_machine.CustomScriptExtension.id
   name                 = "CustomScriptExtension"
-  location             = var.location
-  resource_group_name  = var.resource_group_name
-  virtual_machine_name = azurerm_virtual_machine.VM.name
   publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
   type_handler_version = "1.9"
