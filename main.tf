@@ -80,7 +80,7 @@ resource azurerm_network_interface_security_group_association NIC-NSG {
 
 resource azurerm_network_interface_backend_address_pool_association NIC-Pool{
   network_interface_id    = azurerm_network_interface.NIC.id
-  ip_configuration_name   = "ipconfig${ip_configuration.key + 1}"
+  ip_configuration_name   = azurerm_network_interface.NIC.ip_configuration
   backend_address_pool_id = var.load_balancer_backend_address_pools_ids[ip_configuration.key]
 }
 ####end of changes
