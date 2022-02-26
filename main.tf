@@ -102,7 +102,6 @@ resource azurerm_virtual_machine VM {
     computer_name  = var.name
     admin_username = var.admin_username
     admin_password = var.admin_password
-    custom_data    = var.custom_data
   }
   storage_image_reference {
     publisher = var.storage_image_reference.publisher
